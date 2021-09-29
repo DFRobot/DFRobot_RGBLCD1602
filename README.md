@@ -27,10 +27,10 @@ DFRobot Gravity I2C LCD1602 with RGB Backlight Display can display 2x16 characte
 
 ## Installation
 
-这里提供两种使用本库的方法：
+There are two ways to use this library:
 
-1. 打开Arduino IDE,在状态栏中的Tools--->Manager Libraries 搜索"DFRobot_RGBLCD1602"并安装本库.
-2. 首先下载库文件,将其粘贴到\Arduino\libraries目录中,然后打开examples文件夹并在该文件夹中运行演示.
+1. Open Arduino IDE, find Tools in the status bar -> Manager Libraries, search "DFRobot_RGBLCD1602" and install this library
+2. First download the library file, paste it into the \Arduino\Libraries directory, then open the examples folder and run the demo in that folder
 
 ## Methods
 
