@@ -1,0 +1,49 @@
+#######################################
+# Syntax Coloring Map For Grove - Serial LCD GRB BackLight
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+DFRobot_RGBLCD1602	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+init 	KEYWORD2
+clear	KEYWORD2
+home	KEYWORD2
+display	KEYWORD2
+noDisplay	KEYWORD2
+stopBlink	KEYWORD2
+blink	KEYWORD2
+noCursor	KEYWORD2
+cursor	KEYWORD2
+scrollDisplayLeft	KEYWORD2
+scrollDisplayRight	KEYWORD2
+leftToRight	KEYWORD2
+rightToLeft	KEYWORD2
+autoscroll	KEYWORD2
+noAutoscroll	KEYWORD2
+write	KEYWORD2
+command	KEYWORD2
+setRGB	KEYWORD2
+setPWM	KEYWORD2
+setColor	KEYWORD2
+setColorWhite	KEYWORD2
+blinkLED	KEYWORD2
+noBlinkLED	KEYWORD2
+closeBacklight	KEYWORD2
+setBacklight	KEYWORD2
+customSymbol	KEYWORD2
+#######################################
+# Constants (LITERAL1)
+#######################################
+I2C_ADDRESS	LITERAL1
+WHITE	LITERAL1
+RED	LITERAL1
+GREEN	LITERAL1
+BLUE	LITERAL1
+REG_RED	LITERAL1
+REG_GREEN	LITERAL1
+REG_BLUE	LITERAL1
