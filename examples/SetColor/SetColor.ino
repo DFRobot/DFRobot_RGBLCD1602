@@ -1,6 +1,6 @@
 /*!
  * @file SetColor.ino
- * @brief SetColor.
+ * @brief The serial port input 11 characters, the first nine characters are RGB three primary color values, the last two characters are '\r' and '\n'.
  * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
  * @maintainer [yangfeng](feng.yang@dfrobot.com)
