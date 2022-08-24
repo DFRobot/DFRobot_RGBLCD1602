@@ -43,8 +43,8 @@ void setup() {
 }
 
 void loop() {
-    breath(REG_RED);
-    breath(REG_GREEN);
-    breath(REG_BLUE);
+    breath(lcd.REG_RED);
+    breath(lcd.REG_GREEN);
+    breath(lcd.REG_BLUE);
 }
 

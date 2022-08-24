@@ -39,6 +39,6 @@ lcd.print_out("fade demo")
 
 
 while True:
-  breath(0x04)
-  breath(0x03)
-  breath(0x02)
+  breath(lcd.REG_RED)
+  breath(lcd.REG_GREEN)
+  breath(lcd.REG_BLUE)

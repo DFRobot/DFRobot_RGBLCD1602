@@ -13,16 +13,12 @@ import sys
 import wiringpi
 
 LCD_ADDRESS   =  (0x7c>>1)
-RGB_ADDRESS   =  (0xc0>>1)
 
 #color define
 WHITE      =     0
 RED        =     1
 GREEN      =     2
 BLUE       =     3
-REG_RED    =     0x04
-REG_GREEN  =     0x03
-REG_BLUE   =     0x02
 REG_MODE1  =     0x00
 REG_MODE2  =     0x01
 REG_OUTPUT =     0x08
@@ -71,8 +67,21 @@ class DFRobot_RGBLCD1602:
     self._row = row
     self._col = col
     print("LCD _row=%d _col=%d"%(self._row,self._col))
+
     self.LCD = wiringpi.wiringPiI2CSetup(LCD_ADDRESS)
-    self.RGB = wiringpi.wiringPiI2CSetup(RGB_ADDRESS)
+    self.RGB = wiringpi.wiringPiI2CSetup((0xc0>>1))
+    ret=wiringpi.wiringPiI2CWriteReg8(self.RGB,REG_MODE1, 1)
+    if(ret<0):
+      self.RGB = wiringpi.wiringPiI2CSetup((0x60>>1))
+      self.REG_RED    =     0x06
+      self.REG_GREEN  =     0x07
+      self.REG_BLUE   =     0x08
+      self.RGB_ADDRESS = (0x60>>1) 
+    else:
+      self.REG_RED    =     0x04      
+      self.REG_GREEN  =     0x03
+      self.REG_BLUE   =     0x02
+      self.RGB_ADDRESS = (0xc0>>1)
     self._show_function = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS
     self._begin(self._row,self._col)
 
@@ -95,9 +104,9 @@ class DFRobot_RGBLCD1602:
     @param b  blue  range(0-255)
   '''
   def set_RGB(self,r,g,b):
-    self._set_reg(REG_RED,r)
-    self._set_reg(REG_GREEN,g)
-    self._set_reg(REG_BLUE,b)
+    self._set_reg(self.REG_RED,r)
+    self._set_reg(self.REG_GREEN,g)
+    self._set_reg(self.REG_BLUE,b)
 
   '''
     @brief set cursor position
@@ -329,13 +338,16 @@ class DFRobot_RGBLCD1602:
     self._show_mode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT 
     # set the entry mode
     self._command(LCD_ENTRYMODESET | self._show_mode)
-    # backlight init
-    self._set_reg(REG_MODE1, 0)
-    # set LEDs controllable by both PWM and GRPPWM registers
-    self._set_reg(REG_OUTPUT, 0xFF)
-    # set MODE2 values
-    # 0010 0000 -> 0x20  (DMBLNK to 1, ie blinky mode)
-    self._set_reg(REG_MODE2, 0x20)
+    if self.RGB_ADDRESS == (0xc0>>1):
+      # backlight init
+      self._set_reg(REG_MODE1, 0)
+      # set LEDs controllable by both PWM and GRPPWM registers
+      self._set_reg(REG_OUTPUT, 0xFF)
+      # set MODE2 values
+      # 0010 0000 -> 0x20  (DMBLNK to 1, ie blinky mode)
+      self._set_reg(REG_MODE2, 0x20)
+    else:
+      self._set_reg(0x04, 0x15)
     self.set_color_white()
 
   '''

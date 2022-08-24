@@ -36,6 +36,22 @@ DFRobot_RGBLCD1602::DFRobot_RGBLCD1602(uint8_t lcdCols,uint8_t lcdRows,TwoWire *
 void DFRobot_RGBLCD1602::init()
 {
 	_pWire->begin();
+  _pWire->beginTransmission(0xc0>>1);
+  if(Wire.endTransmission()==0){
+    _RGBAddr = 0xc0>>1;
+    REG_RED   =      0x04;
+    REG_GREEN =      0x03;
+    REG_BLUE  =      0x02;
+  } else{
+    _pWire->beginTransmission(0x60>>1);
+    if(Wire.endTransmission()==0){
+      _RGBAddr = 0x60>>1;
+      REG_RED      =   0x06 ;       // pwm2
+      REG_GREEN    =   0x07 ;       // pwm1
+      REG_BLUE     =   0x08 ;       // pwm0
+    }
+  }
+
 	_showFunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
 	begin(_rows);
 }
@@ -240,15 +256,17 @@ void DFRobot_RGBLCD1602::begin( uint8_t rows, uint8_t charSize)
     ///< set the entry mode
     command(LCD_ENTRYMODESET | _showMode);
     
-    
-    ///< backlight init
-    setReg(REG_MODE1, 0);
-    ///< set LEDs controllable by both PWM and GRPPWM registers
-    setReg(REG_OUTPUT, 0xFF);
-    ///< set MODE2 values
-    ///< 0010 0000 -> 0x20  (DMBLNK to 1, ie blinky mode)
-    setReg(REG_MODE2, 0x20);
-    
+    if(_RGBAddr == (0xc0>>1)){
+      ///< backlight init
+      setReg(REG_MODE1, 0);
+      ///< set LEDs controllable by both PWM and GRPPWM registers
+      setReg(REG_OUTPUT, 0xFF);
+      ///< set MODE2 values
+      ///< 0010 0000 -> 0x20  (DMBLNK to 1, ie blinky mode)
+      setReg(REG_MODE2, 0x20);
+    }else{
+      setReg(0x04, 0x15);
+    }
     setColorWhite();
 
 }

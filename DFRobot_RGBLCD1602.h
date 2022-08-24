@@ -32,9 +32,7 @@
 #define GREEN           2
 #define BLUE            3
 
-#define REG_RED         0x04        // pwm2
-#define REG_GREEN       0x03        // pwm1
-#define REG_BLUE        0x02        // pwm0
+
 
 #define REG_MODE1       0x00
 #define REG_MODE2       0x01
@@ -92,7 +90,6 @@ class DFRobot_RGBLCD1602 : public Print
 {
 
 public:
-
   /**
    *  @brief Constructor
    */
@@ -279,6 +276,10 @@ private:
   uint8_t _cols;
   uint8_t _rows;
   TwoWire *_pWire;
+public:
+  uint8_t REG_RED      =   0 ;       // pwm2
+  uint8_t REG_GREEN    =   0 ;       // pwm1
+  uint8_t REG_BLUE     =   0 ;       // pwm0
 };
 
 #endif
