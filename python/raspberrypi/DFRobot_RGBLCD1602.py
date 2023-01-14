@@ -62,26 +62,32 @@ LCD_5x8DOTS = 0x00
 
 
 class DFRobot_RGBLCD1602:
-  def __init__(self, col, row):
+  def __init__(self, rgb_addr,col, row):
     #self.i2c=i2c
     self._row = row
     self._col = col
+    self.RGB_ADDRESS = rgb_addr
     print("LCD _row=%d _col=%d"%(self._row,self._col))
-
     self.LCD = wiringpi.wiringPiI2CSetup(LCD_ADDRESS)
-    self.RGB = wiringpi.wiringPiI2CSetup((0xc0>>1))
-    ret=wiringpi.wiringPiI2CWriteReg8(self.RGB,REG_MODE1, 1)
-    if(ret<0):
+    if self.RGB_ADDRESS == 0x60:
+      self.RGB = wiringpi.wiringPiI2CSetup(0x60)
+      wiringpi.wiringPiI2CWriteReg8(self.RGB,REG_MODE1, 1)
+      self.REG_RED    =     0x04      
+      self.REG_GREEN  =     0x03
+      self.REG_BLUE   =     0x02
+      self.REG_ONLY   =     0x02
+    elif self.RGB_ADDRESS == (0x60>>1) :
       self.RGB = wiringpi.wiringPiI2CSetup((0x60>>1))
       self.REG_RED    =     0x06
       self.REG_GREEN  =     0x07
       self.REG_BLUE   =     0x08
-      self.RGB_ADDRESS = (0x60>>1) 
-    else:
-      self.REG_RED    =     0x04      
-      self.REG_GREEN  =     0x03
-      self.REG_BLUE   =     0x02
-      self.RGB_ADDRESS = (0xc0>>1)
+      self.REG_ONLY   =     0x08
+    elif self.RGB_ADDRESS == (0x6B) :
+      self.RGB = wiringpi.wiringPiI2CSetup(0x6B)
+      self.REG_RED    =     0x06
+      self.REG_GREEN  =     0x05
+      self.REG_BLUE   =     0x04
+      self.REG_ONLY   =     0x04
     self._show_function = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS
     self._begin(self._row,self._col)
 
@@ -104,10 +110,15 @@ class DFRobot_RGBLCD1602:
     @param b  blue  range(0-255)
   '''
   def set_RGB(self,r,g,b):
+    if self.RGB_ADDRESS == (0x60>>1):
+      r=int(r*192/255)
+      g=int(g*192/255)
+      b=int(b*192/255)
     self._set_reg(self.REG_RED,r)
     self._set_reg(self.REG_GREEN,g)
     self._set_reg(self.REG_BLUE,b)
-
+    if self.RGB_ADDRESS == 0x6b:
+      self._set_reg(0x07,0xFF)
   '''
     @brief set cursor position
     @param col columns optional range 0-15
@@ -238,22 +249,6 @@ class DFRobot_RGBLCD1602:
       wiringpi.wiringPiI2CWriteReg8(self.LCD,0x40,charmap[i])
 
   '''
-    @brief blink the LED backlight
-  '''
-  def blink_LED(self):
-    # blink period in seconds = (<reg 7> + 1) / 24
-    # on/off ratio = <reg 6> / 256
-    self._set_reg(0x07, 0x17)  # blink every second
-    self._set_reg(0x06, 0x7f)  # half on, half off
-
-  '''
-    @brief not blink the LED backlight
-  '''
-  def no_blink_LED(self):
-    self._set_reg(0x07, 0x00)
-    self._set_reg(0x06, 0xff)
-
-  '''
     @brief set the backlight
     @param mode  true indicates the backlight is turned on and set to white, false indicates the backlight is turned off
   '''
@@ -278,6 +273,8 @@ class DFRobot_RGBLCD1602:
   '''
   def set_pwm(self,color,pwm):
     self._set_reg(color, pwm)
+    if self.RGB_ADDRESS == 0x6b:
+      self._set_reg(0x07,0xFF)
 
   '''
      @brief set the backlight to white
@@ -338,7 +335,7 @@ class DFRobot_RGBLCD1602:
     self._show_mode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT 
     # set the entry mode
     self._command(LCD_ENTRYMODESET | self._show_mode)
-    if self.RGB_ADDRESS == (0xc0>>1):
+    if self.RGB_ADDRESS == 0x60:
       # backlight init
       self._set_reg(REG_MODE1, 0)
       # set LEDs controllable by both PWM and GRPPWM registers
@@ -346,8 +343,14 @@ class DFRobot_RGBLCD1602:
       # set MODE2 values
       # 0010 0000 -> 0x20  (DMBLNK to 1, ie blinky mode)
       self._set_reg(REG_MODE2, 0x20)
-    else:
+    elif self.RGB_ADDRESS == (0x60>>1) :
       self._set_reg(0x04, 0x15)
+    elif self.RGB_ADDRESS == (0x6B) :
+      self._set_reg(0x2F, 0x00)
+      self._set_reg(0x00, 0x20)
+      self._set_reg(0x01, 0x00)
+      self._set_reg(0x02, 0x01)
+      self._set_reg(0x03, 0x04)
     self.set_color_white()
 
   '''

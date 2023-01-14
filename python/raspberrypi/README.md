@@ -140,16 +140,6 @@ python3: pip3 install wiringpi
   def customSymbol(self,location, charmap):
 
   '''
-    @brief blink the LED backlight
-  '''
-  def blink_LED(self):
-
-  '''
-    @brief the LED backlight doesn't blink
-  '''
-  def no_blink_LED(self):
-
-  '''
     @brief set the backlight
     @param mode  true indicates the backlight is turned on and set to white, false indicates the backlight is turned off
   '''

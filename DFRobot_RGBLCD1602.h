@@ -11,7 +11,7 @@
 
 #ifndef __DFRobot_RGBLCD1602_H__
 #define __DFRobot_RGBLCD1602_H__
-#include<Arduino.h>
+#include <Arduino.h>
 #include <Wire.h>
 #include <inttypes.h>
 #include "Print.h"
@@ -22,7 +22,6 @@
  *  @brief Device I2C Arress
  */
 #define LCD_ADDRESS     (0x7c>>1)
-#define RGB_ADDRESS     (0xc0>>1)
 
 /*!
  *  @brief color define
@@ -93,7 +92,7 @@ public:
   /**
    *  @brief Constructor
    */
-  DFRobot_RGBLCD1602(uint8_t lcdCols,uint8_t lcdRows,TwoWire *pWire=&Wire,uint8_t lcdAddr=LCD_ADDRESS,uint8_t RGBAddr=RGB_ADDRESS);
+  DFRobot_RGBLCD1602(uint8_t RGBAddr,uint8_t lcdCols=16,uint8_t lcdRows=2,TwoWire *pWire=&Wire,uint8_t lcdAddr=LCD_ADDRESS);
 
   /**
    *  @brief initialize the LCD and master IIC
@@ -197,7 +196,7 @@ public:
    *  @param color  backlight color  Preferences：REG_RED\REG_GREEN\REG_BLUE
    *  @param pwm  color intensity   range(0-255)
    */
-  void setPWM(uint8_t color, uint8_t pwm){setReg(color, pwm);}      // set pwm
+  void setPWM(uint8_t color, uint8_t pwm){setReg(color, pwm); if(_RGBAddr==0x6B){setReg(0x07, pwm);}}      // set pwm
 
   /**
    *  @brief backlight color
@@ -216,16 +215,6 @@ public:
   void setColorWhite(){setRGB(255,255 , 255);}
 
   /**
-   *  @brief blink the LED backlight
-   */
-  void blinkLED(void);
-
-  /**
-   *  @brief the LED backlight doesn't blink
-   */
-  void noBlinkLED(void);
-
-  /**
    *  @brief write character
    *  @param data the written data
    */
@@ -242,7 +231,7 @@ public:
    *  @param mode  true indicates the backlight is turned on and set to white, false indicates the backlight is turned off
    */
   void setBacklight(bool mode);
-
+  void setReg(uint8_t addr, uint8_t data);
   using Print::write;
   
 private:
@@ -265,7 +254,7 @@ private:
    *  @param addr register address
    *  @param data data
    */
-  void setReg(uint8_t addr, uint8_t data);
+
   uint8_t _showFunction;
   uint8_t _showControl;
   uint8_t _showMode;
@@ -280,6 +269,7 @@ public:
   uint8_t REG_RED      =   0 ;       // pwm2
   uint8_t REG_GREEN    =   0 ;       // pwm1
   uint8_t REG_BLUE     =   0 ;       // pwm0
+  uint8_t REG_ONLY     =   0 ;       // pwm0
 };
 
 #endif

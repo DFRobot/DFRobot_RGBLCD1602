@@ -140,16 +140,6 @@ python3: pip3 install wiringpi
   def customSymbol(self,location, charmap):
 
   '''
-    @brief blink the LED backlight
-  '''
-  def blink_LED(self):
-
-  '''
-    @brief 不闪烁背光
-  '''
-  def no_blink_LED(self):
-
-  '''
     @brief 设置背光
     @param mode  true代表开启背光并设置为白色，false代表关闭背光
   '''

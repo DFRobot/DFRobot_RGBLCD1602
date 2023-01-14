@@ -24,7 +24,7 @@ const uint8_t color_define[4][3] =
 };
 
 /*******************************public*******************************/
-DFRobot_RGBLCD1602::DFRobot_RGBLCD1602(uint8_t lcdCols,uint8_t lcdRows,TwoWire *pWire,uint8_t lcdAddr,uint8_t RGBAddr)
+DFRobot_RGBLCD1602::DFRobot_RGBLCD1602(uint8_t RGBAddr,uint8_t lcdCols,uint8_t lcdRows,TwoWire *pWire,uint8_t lcdAddr)
 {
   _lcdAddr = lcdAddr;
   _RGBAddr = RGBAddr;
@@ -35,25 +35,25 @@ DFRobot_RGBLCD1602::DFRobot_RGBLCD1602(uint8_t lcdCols,uint8_t lcdRows,TwoWire *
 
 void DFRobot_RGBLCD1602::init()
 {
-	_pWire->begin();
-  _pWire->beginTransmission(0xc0>>1);
-  if(Wire.endTransmission()==0){
-    _RGBAddr = 0xc0>>1;
+  _pWire->begin();
+  if(_RGBAddr == (0x60)){
     REG_RED   =      0x04;
     REG_GREEN =      0x03;
     REG_BLUE  =      0x02;
-  } else{
-    _pWire->beginTransmission(0x60>>1);
-    if(Wire.endTransmission()==0){
-      _RGBAddr = 0x60>>1;
-      REG_RED      =   0x06 ;       // pwm2
-      REG_GREEN    =   0x07 ;       // pwm1
-      REG_BLUE     =   0x08 ;       // pwm0
-    }
+    REG_ONLY  =      0x02 ;
+  } else if(_RGBAddr == (0x60>>1)){
+    REG_RED      =   0x06 ;       // pwm2
+    REG_GREEN    =   0x07 ;       // pwm1
+    REG_BLUE     =   0x08 ;       // pwm0
+    REG_ONLY     =   0x08 ;
+  } else if(_RGBAddr == (0x6B)){
+    REG_RED      =   0x06 ;       // pwm2
+    REG_GREEN    =   0x05 ;       // pwm1
+    REG_BLUE     =   0x04 ;       // pwm0
+    REG_ONLY     =   0x04 ; 
   }
-
-	_showFunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
-	begin(_rows);
+  _showFunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
+  begin(_rows);
 }
 
 void DFRobot_RGBLCD1602::clear()
@@ -163,9 +163,23 @@ void DFRobot_RGBLCD1602::setCursor(uint8_t col, uint8_t row)
 
 void DFRobot_RGBLCD1602::setRGB(uint8_t r, uint8_t g, uint8_t b)
 {
+  uint16_t temp_r,temp_g,temp_b;
+  if(_RGBAddr == 0x60>>1){
+    temp_r = (uint16_t)r*192/255;
+    temp_g = (uint16_t)g*192/255;
+    temp_b = (uint16_t)b*192/255;
+    setReg(REG_RED, temp_r);
+    setReg(REG_GREEN, temp_g);
+    setReg(REG_BLUE, temp_b);
+  } else{
     setReg(REG_RED, r);
     setReg(REG_GREEN, g);
     setReg(REG_BLUE, b);
+    if(_RGBAddr == 0x6B){
+      setReg(0x07, 0xFF);
+    }
+  }
+
 }
 
 void DFRobot_RGBLCD1602::setColor(uint8_t color)
@@ -174,19 +188,6 @@ void DFRobot_RGBLCD1602::setColor(uint8_t color)
     setRGB(color_define[color][0], color_define[color][1], color_define[color][2]);
 }
 
-void DFRobot_RGBLCD1602::blinkLED(void)
-{
-    ///< blink period in seconds = (<reg 7> + 1) / 24
-    ///< on/off ratio = <reg 6> / 256
-    setReg(0x07, 0x17);  // blink every second
-    setReg(0x06, 0x7f);  // half on, half off
-}
-
-void DFRobot_RGBLCD1602::noBlinkLED(void)
-{
-    setReg(0x07, 0x00);
-    setReg(0x06, 0xff);
-}
 
 inline size_t DFRobot_RGBLCD1602::write(uint8_t value)
 {
@@ -264,11 +265,21 @@ void DFRobot_RGBLCD1602::begin( uint8_t rows, uint8_t charSize)
       ///< set MODE2 values
       ///< 0010 0000 -> 0x20  (DMBLNK to 1, ie blinky mode)
       setReg(REG_MODE2, 0x20);
-    }else{
+    }else if(_RGBAddr == (0x60>>1)){
+      // setReg(0x00, 0x00);
+       setReg(0x01, 0x00);
+       setReg(0x02, 0xfF);
+      // setReg(0x03, 0x05);
       setReg(0x04, 0x15);
+      //setReg(0x05, 0x44);
+    }else if(_RGBAddr==0x6B){
+        setReg(0x2F, 0x00);
+        setReg(0x00, 0x20);
+        setReg(0x01, 0x00);
+        setReg(0x02, 0x01);
+        setReg(0x03, 4);
     }
     setColorWhite();
-
 }
 
 void DFRobot_RGBLCD1602::send(uint8_t *data, uint8_t len)

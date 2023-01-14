@@ -10,7 +10,20 @@
  */
 #include "DFRobot_RGBLCD1602.h"
 
-DFRobot_RGBLCD1602 lcd(/*lcdCols*/16,/*lcdRows*/2);  //16 characters and 2 lines of show
+/*
+Change the RGBaddr value based on the hardware version
+-----------------------------------------
+       Moudule        | Version| RGBAddr|
+-----------------------------------------
+  LCD1602 Module      |  V1.0  | 0x60   |
+-----------------------------------------
+  LCD1602 Module      |  V1.1  | 0x6B   |
+-----------------------------------------
+  LCD1602 RGB Module  |  V1.0  | 0x60   |
+-----------------------------------------
+*/
+
+DFRobot_RGBLCD1602 lcd(/*RGBAddr*/0x60 ,/*lcdCols*/16,/*lcdRows*/2);  //16 characters and 2 lines of show
 
 void breath(unsigned char color){
     for(int i=0; i<255; i++){
@@ -43,8 +56,11 @@ void setup() {
 }
 
 void loop() {
+    // RGB use
     breath(lcd.REG_RED);
     breath(lcd.REG_GREEN);
     breath(lcd.REG_BLUE);
+    // Monochrome use
+    //breath(lcd.REG_ONLY); 
 }
 

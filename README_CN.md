@@ -155,15 +155,6 @@ DFRobot Gravity I2C LCD1602彩色背光液晶屏可以显示2x16个字符，支�
    */
   void setColorWhite();
 
-  /**
-   *  @brief blink the LED backlight
-   */
-  void blinkLED(void);
-
-  /**
-   *  @brief 不闪烁背光
-   */
-  void noBlinkLED(void);
 
   /**
    *  @brief write character

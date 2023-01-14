@@ -31,8 +31,6 @@ setRGB	KEYWORD2
 setPWM	KEYWORD2
 setColor	KEYWORD2
 setColorWhite	KEYWORD2
-blinkLED	KEYWORD2
-noBlinkLED	KEYWORD2
 closeBacklight	KEYWORD2
 setBacklight	KEYWORD2
 customSymbol	KEYWORD2

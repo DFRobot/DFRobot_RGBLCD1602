@@ -29,8 +29,17 @@ def breath(color):
 
   time.sleep(0.5)
 
-
-lcd=DFRobot_RGBLCD1602(16,2)                               #create LCD object,specify col and row
+# Change the rgb_addr value based on the hardware version
+# -----------------------------------------
+#        Moudule        | Version|rgb_addr|
+# -----------------------------------------
+#   LCD1602 Module      |  V1.0  | 0x60   |
+# -----------------------------------------
+#   LCD1602 Module      |  V1.1  | 0x6B   |
+# -----------------------------------------
+#   LCD1602 RGB Module  |  V1.0  | 0x60   |
+# -----------------------------------------
+lcd=DFRobot_RGBLCD1602(rgb_addr=0x60,col= 16,row = 2)                               #create LCD object,specify col and row
 '''
   @brief output data to LCD to display
   @param arg output data
@@ -42,3 +51,4 @@ while True:
   breath(lcd.REG_RED)
   breath(lcd.REG_GREEN)
   breath(lcd.REG_BLUE)
+  #breath(lcd.REG_ONLY) # Monochrome use

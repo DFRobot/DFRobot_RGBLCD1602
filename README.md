@@ -156,16 +156,6 @@ There are two ways to use this library:
   void setColorWhite();
 
   /**
-   *  @brief blink the LED backlight
-   */
-  void blinkLED(void);
-
-  /**
-   *  @brief not blink the LED backlight
-   */
-  void noBlinkLED(void);
-
-  /**
    *  @brief write character
    *  @param data the written data
    */

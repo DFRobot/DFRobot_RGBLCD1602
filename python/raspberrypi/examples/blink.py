@@ -12,8 +12,17 @@ import sys
 sys.path.append('../')
 from DFRobot_RGBLCD1602 import *
 import time
-
-lcd=DFRobot_RGBLCD1602(col= 16,row = 2)                               #create LCD object,specify col and row
+# Change the rgb_addr value based on the hardware version
+# -----------------------------------------
+#        Moudule        | Version|rgb_addr|
+# -----------------------------------------
+#   LCD1602 Module      |  V1.0  | 0x60   |
+# -----------------------------------------
+#   LCD1602 Module      |  V1.1  | 0x6B   |
+# -----------------------------------------
+#   LCD1602 RGB Module  |  V1.0  | 0x60   |
+# -----------------------------------------
+lcd=DFRobot_RGBLCD1602(rgb_addr=0x60,col= 16,row = 2)                               #create LCD object,specify col and row
 
 '''
   @brief output data to LCD to display

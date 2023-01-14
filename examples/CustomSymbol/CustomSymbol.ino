@@ -11,7 +11,20 @@
 
 #include "DFRobot_RGBLCD1602.h"
 
-DFRobot_RGBLCD1602 lcd(/*lcdCols*/16,/*lcdRows*/2);  //16 characters and 2 lines of show
+/*
+Change the RGBaddr value based on the hardware version
+-----------------------------------------
+       Moudule        | Version| RGBAddr|
+-----------------------------------------
+  LCD1602 Module      |  V1.0  | 0x60   |
+-----------------------------------------
+  LCD1602 Module      |  V1.1  | 0x6B   |
+-----------------------------------------
+  LCD1602 RGB Module  |  V1.0  | 0x60   |
+-----------------------------------------
+*/
+
+DFRobot_RGBLCD1602 lcd(/*RGBAddr*/0x60 ,/*lcdCols*/16,/*lcdRows*/2);  //16 characters and 2 lines of show
 
 // make some custom characters:
 byte heart[8] = {
