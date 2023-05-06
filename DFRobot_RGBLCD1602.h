@@ -90,170 +90,199 @@ class DFRobot_RGBLCD1602 : public Print
 
 public:
   /**
-   *  @brief Constructor
+   * @fn DFRobot_RGBLCD1602
+   * @brief Constructor
    */
   DFRobot_RGBLCD1602(uint8_t RGBAddr,uint8_t lcdCols=16,uint8_t lcdRows=2,TwoWire *pWire=&Wire,uint8_t lcdAddr=LCD_ADDRESS);
 
   /**
-   *  @brief initialize the LCD and master IIC
+   * @fn init
+   * @brief initialize the LCD and master IIC
    */ 
   void init();
 
   /**
-   *  @brief clear the display and return the cursor to the initial position (position 0)
+   * @fn clear
+   * @brief clear the display and return the cursor to the initial position (position 0)
    */
   void clear();
 
   /**
-   *  @brief return the cursor to the initial position (0,0)
+   * @fn home
+   * @brief return the cursor to the initial position (0,0)
    */
   void home();
 
     /**
-     *  @brief Turn off the display
+     * @fn noDisplay
+     * @brief Turn off the display
      */
   void noDisplay();
 
   /**
-   *  @brief Turn on the display
+   * @fn display
+   * @brief Turn on the display
    */
   void display();
 
   /**
-   *  @brief Turn  off the blinking showCursor
+   * @fn stopBlink
+   * @brief Turn  off the blinking showCursor
    */
   void stopBlink();
 
   /**
-   *  @brief Turn on  the blinking showCursor
+   * @fn blink
+   * @brief Turn on  the blinking showCursor
    */
   void blink();
 
   /**
-   *  @brief Turn off the underline showCursor 
+   * @fn noCursor
+   * @brief Turn off the underline showCursor 
    */
   void noCursor();
 
   /**
-   *  @brief Turn on the underline showCursor 
+   * @fn cursor
+   * @brief Turn on the underline showCursor 
    */
   void cursor();
 
   /**
-   *  @brief scroll left to display
+   * @fn scrollDisplayLeft
+   * @brief scroll left to display
    */
   void scrollDisplayLeft();
 
   /**
-   *  @brief scroll right to display
+   * @fn scrollDisplayRight
+   * @brief scroll right to display
    */
   void scrollDisplayRight();
  
   /**
-   *  @brief This is for text that flows Left to Right
+   * @fn leftToRight
+   * @brief This is for text that flows Left to Right
    */
   void leftToRight();
  
   /**
-   *  @brief This is for text that flows Right to Left
+   * @fn rightToLeft
+   * @brief This is for text that flows Right to Left
    */
   void rightToLeft();
 
   /**
-   *  @brief This will 'left justify' text from the showCursor
+   * @fn noAutoscroll
+   * @brief This will 'left justify' text from the showCursor
    */
   void noAutoscroll();
  
   /**
-   *  @brief This will 'right justify' text from the showCursor
+   * @fn autoscroll
+   * @brief This will 'right justify' text from the showCursor
    */
   void autoscroll();
    
   /**
-   *  @brief Allows us to fill the first 8 CGRAM locations with custom characters
-   *  @param location substitute character range (0-7)
-   *  @param charmap  character array the size is 8 bytes
+   * @fn customSymbol
+   * @brief Allows us to fill the first 8 CGRAM locations with custom characters
+   * @param location substitute character range (0-7)
+   * @param charmap  character array the size is 8 bytes
    */
   void customSymbol(uint8_t location, uint8_t charmap[]);
 
   /**
-   *  @brief set cursor position
-   *  @param col columns optional range 0-15
-   *  @param row rows optional range 0-1，0 is the first row, 1 is the second row
+   * @fn setCursor
+   * @brief set cursor position
+   * @param col columns optional range 0-15
+   * @param row rows optional range 0-1，0 is the first row, 1 is the second row
    */
   void setCursor(uint8_t col, uint8_t row);
   
   /**
-   *  @brief set RGB
-   *  @param r  red   range(0-255)
-   *  @param g  green range(0-255)
-   *  @param b  blue  range(0-255)
+   * @fn setRGB
+   * @brief set RGB
+   * @param r  red   range(0-255)
+   * @param g  green range(0-255)
+   * @param b  blue  range(0-255)
    */
   void setRGB(uint8_t r, uint8_t g, uint8_t b);
 
   /**
-   *  @brief set backlight PWM output
-   *  @param color  backlight color  Preferences：REG_RED\REG_GREEN\REG_BLUE
-   *  @param pwm  color intensity   range(0-255)
+   * @fn setPWM
+   * @brief set backlight PWM output
+   * @param color  backlight color  Preferences：REG_RED\REG_GREEN\REG_BLUE
+   * @param pwm  color intensity   range(0-255)
    */
   void setPWM(uint8_t color, uint8_t pwm){setReg(color, pwm); if(_RGBAddr==0x6B){setReg(0x07, pwm);}}      // set pwm
 
   /**
-   *  @brief backlight color
-   *  @param color  backlight color  Preferences： WHITE\RED\GREEN\BLUE
+   * @fn setColor
+   * @brief backlight color
+   * @param color  backlight color  Preferences： WHITE\RED\GREEN\BLUE
    */
   void setColor(uint8_t color);
 
   /**
-   *  @brief close the backlight
+   * @fn closeBacklight
+   * @brief close the backlight
    */
   void closeBacklight(){setRGB(0, 0, 0);}
 
   /**
-   *  @brief set the backlight to white
+   * @fn setColorWhite
+   * @brief set the backlight to white
    */
-  void setColorWhite(){setRGB(255,255 , 255);}
+  void setColorWhite(){setRGB(255, 255, 255);}
 
   /**
-   *  @brief write character
-   *  @param data the written data
+   * @fn write
+   * @brief write character
+   * @param data the written data
    */
   virtual size_t write(uint8_t data);
 
   /**
-   *  @brief send command
-   *  @param data the sent command
+   * @fn command
+   * @brief send command
+   * @param data the sent command
    */
   void command(uint8_t data);
 
   /**
-   *  @brief set the backlight
-   *  @param mode  true indicates the backlight is turned on and set to white, false indicates the backlight is turned off
+   * @fn setBacklight
+   * @brief set the backlight
+   * @param mode  true indicates the backlight is turned on and set to white, false indicates the backlight is turned off
    */
   void setBacklight(bool mode);
-  void setReg(uint8_t addr, uint8_t data);
   using Print::write;
   
 private:
   /**
-   *  @brief the initialization function
-   *  @param row rows optional range 0-1，0 is the first row, 1 is the second row
-   *  @param charSize  character size LCD_5x8DOTS\LCD_5x10DOTS
+   * @fn begin
+   * @brief the initialization function
+   * @param row rows optional range 0-1，0 is the first row, 1 is the second row
+   * @param charSize  character size LCD_5x8DOTS\LCD_5x10DOTS
    */
   void begin(uint8_t rows, uint8_t charSize = LCD_5x8DOTS);
 
   /**
-   *  @brief set cursor
-   *  @param data the data to send
-   *  @param len length of the data
+   * @fn send
+   * @brief set cursor
+   * @param data the data to send
+   * @param len length of the data
    */
   void send(uint8_t *data, uint8_t len);
 
   /**
-   *  @brief set the register
-   *  @param addr register address
-   *  @param data data
+   * @fn setReg
+   * @brief Configure related registers
+   * @param addr  The address of the register to be operated on
+   * @param data  The data to be written
    */
+  void setReg(uint8_t addr, uint8_t data);
 
   uint8_t _showFunction;
   uint8_t _showControl;

@@ -25,6 +25,8 @@ Change the RGBaddr value based on the hardware version
 -----------------------------------------
   LCD1602 RGB Module  |  V1.0  | 0x60   |
 -----------------------------------------
+  LCD1602 RGB Module  |  V1.1  | 0x2D   |
+-----------------------------------------
 */
 
 DFRobot_RGBLCD1602 lcd(/*RGBAddr*/0x60 ,/*lcdCols*/16,/*lcdRows*/2);  //16 characters and 2 lines of show

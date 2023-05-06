@@ -51,6 +51,11 @@ void DFRobot_RGBLCD1602::init()
     REG_GREEN    =   0x05 ;       // pwm1
     REG_BLUE     =   0x04 ;       // pwm0
     REG_ONLY     =   0x04 ; 
+  } else if(_RGBAddr == (0x2D)){
+    REG_RED      =   0x01 ;       // pwm2
+    REG_GREEN    =   0x02 ;       // pwm1
+    REG_BLUE     =   0x03 ;       // pwm0
+    REG_ONLY     =   0x01 ; 
   }
   _showFunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
   begin(_rows);
@@ -266,12 +271,9 @@ void DFRobot_RGBLCD1602::begin( uint8_t rows, uint8_t charSize)
       ///< 0010 0000 -> 0x20  (DMBLNK to 1, ie blinky mode)
       setReg(REG_MODE2, 0x20);
     }else if(_RGBAddr == (0x60>>1)){
-      // setReg(0x00, 0x00);
        setReg(0x01, 0x00);
        setReg(0x02, 0xfF);
-      // setReg(0x03, 0x05);
-      setReg(0x04, 0x15);
-      //setReg(0x05, 0x44);
+       setReg(0x04, 0x15);
     }else if(_RGBAddr==0x6B){
         setReg(0x2F, 0x00);
         setReg(0x00, 0x20);

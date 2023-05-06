@@ -82,6 +82,8 @@ armsUp = [
 # -----------------------------------------
 #   LCD1602 RGB Module  |  V1.0  | 0x60   |
 # -----------------------------------------
+#   LCD1602 RGB Module  |  V1.1  | 0x2D   |
+# -----------------------------------------
 lcd=DFRobot_RGBLCD1602(rgb_addr=0x60,col= 16,row = 2)                               #create LCD object,specify col and row
 # create a new character
 '''
@@ -89,11 +91,11 @@ lcd=DFRobot_RGBLCD1602(rgb_addr=0x60,col= 16,row = 2)                           
   @param location substitute character range（0-7）
   @param charmap  character listing the size is 8 bytes
 '''
-lcd.customSymbol(0, heart)
-lcd.customSymbol(1, smiley)
-lcd.customSymbol(2, frownie)
-lcd.customSymbol(3, armsDown)
-lcd.customSymbol(4, armsUp)
+lcd.custom_symbol(0, heart)
+lcd.custom_symbol(1, smiley)
+lcd.custom_symbol(2, frownie)
+lcd.custom_symbol(3, armsDown)
+lcd.custom_symbol(4, armsUp)
 #set up the lcd's number of columns and rows:
 
 '''

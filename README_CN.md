@@ -6,7 +6,7 @@
 
 
 ![](./resources/images/DFR0464.jpg)
-
+![](./resources/images/DFR0557.png)
 
 ## 产品链接(https://www.dfrobot.com.cn/goods-1419.html)
 
@@ -51,32 +51,32 @@ DFRobot Gravity I2C LCD1602彩色背光液晶屏可以显示2x16个字符，支�
   void home();
 
     /**
-     *  @brief Turn off the display
+     *  @brief 关闭显示
      */
   void noDisplay();
 
   /**
-   *  @brief Turn on the display
+   *  @brief 打开显示
    */
   void display();
 
   /**
-   *  @brief Turn  off the blinking showCursor
+   *  @brief 关闭闪烁光标
    */
   void stopBlink();
 
   /**
-   *  @brief Turn on  the blinking showCursor
+   *  @brief 打开闪烁光标
    */
   void blink();
 
   /**
-   *  @brief Turn off the underline showCursor 
+   *  @brief 关闭下划线光标
    */
   void noCursor();
 
   /**
-   *  @brief Turn on the underline showCursor 
+   *  @brief 打开下划线光标
    */
   void cursor();
 
@@ -91,27 +91,27 @@ DFRobot Gravity I2C LCD1602彩色背光液晶屏可以显示2x16个字符，支�
   void scrollDisplayRight();
  
   /**
-   *  @brief This is for text that flows Left to Right
+   *  @brief 此函数用于从左到右流动的文本
    */
   void leftToRight();
  
   /**
-   *  @brief This is for text that flows Right to Left
+   *  @brief 此函数用于从右到左流动的文本
    */
   void rightToLeft();
 
   /**
-   *  @brief This will 'left justify' text from the showCursor
+   *  @brief  这将使文本从显示光标处“左对齐”
    */
   void noAutoscroll();
  
   /**
-   *  @brief This will 'right justify' text from the showCursor
+   *  @brief 这将使文本从显示光标处“右对齐”
    */
   void autoscroll();
    
   /**
-   *  @brief Allows us to fill the first 8 CGRAM locations with custom characters
+   *  @brief 允许我们将前8个CGRAM位置填充自定义字符
    *  @param location 代替字符 范围（0-7）
    *  @param charmap  字符数组 大小8个字节
    */

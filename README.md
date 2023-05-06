@@ -6,7 +6,7 @@ Have you been fed up with Black/White LCD screen? Do you want to try a colorful 
 
 
 ![](./resources/images/DFR0464.jpg)
-
+![](./resources/images/DFR0557.png)
 
 ## Product Link(https://www.dfrobot.com/product-1609.html)
 
@@ -195,3 +195,4 @@ There are two ways to use this library:
 ## Credits
 
 Written by yangfeng(feng.yang@dfrobot.com), 2021. (Welcome to our [website](https://www.dfrobot.com/))
+ 

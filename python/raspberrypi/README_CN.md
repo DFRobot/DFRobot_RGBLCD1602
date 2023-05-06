@@ -6,7 +6,7 @@
 
 
 ![](../../resources/images/DFR0464.jpg)
-
+![](../../resources/images/DFR0557.png)
 
 ## 产品链接(https://www.dfrobot.com.cn/goods-1419.html)
 
@@ -35,132 +35,133 @@ python3: pip3 install wiringpi
 ## 方法
 
 ```Python
-  '''
-    @brief write character
-    @param data 写入的数据
-  '''
-  def write(self,data):
 
-  '''
-    @brief 设置RGB
-    @param r  red   范围(0-255)
-    @param g  green 范围(0-255)
-    @param b  blue  范围(0-255)
-  '''
-  def set_RGB(self,r,g,b):
-
-  '''
-    @brief 设置光标位置
-    @param col 列数 可选范围 0-15
-    @param row 行数 可选范围 0-1，0代表了第一行，1代表了第二行
-  '''
-  def set_cursor(self,col,row):
-
-  '''
-    @brief 清除显示并将光标回到初始位置（0位置）
-  '''
-  def clear(self):
-
-  '''
-    @brief 向左滚动显示
-  '''
-  def scroll_display_left(self):
-
-  '''
-    @brief 向右滚动显示
-  '''
-  def scroll_display_right(self):
-
-  '''
-    @brief 向液晶屏输出显示
-    @param arg 输出的数据
-  '''
-  def print_out(self,arg):
-
-  '''
-    @brief 将光标回到初始位置（0,0）
-  '''
-  def home(self):
-
+  def write(self,data)
     '''
-      @brief Turn off the display
+      @brief write character
+      @param data 写入的数据
     '''
-  def no_display(self):
 
-  '''
-    @brief Turn on the display
-  '''
-  def display(self):
+  def set_RGB(self,r,g,b)
+    '''
+      @brief 设置RGB
+      @param r  red   范围(0-255)
+      @param g  green 范围(0-255)
+      @param b  blue  范围(0-255)
+    '''
 
-  '''
-    @brief Turn  off the blinking showCursor
-  '''
-  def stop_blink(self):
+  def set_cursor(self,col,row)
+    '''
+      @brief 设置光标位置
+      @param col 列数 可选范围 0-15
+      @param row 行数 可选范围 0-1，0代表了第一行，1代表了第二行
+    '''
 
-  '''
-    @brief Turn on  the blinking showCursor
-  '''
-  def blink(self):
+  def clear(self)
+    '''
+      @brief 清除显示并将光标回到初始位置（0位置）
+    '''
 
-  '''
-    @brief Turn off the underline showCursor 
-  '''
-  def no_cursor(self):
+  def scroll_display_left(self)
+    '''
+      @brief 向左滚动显示
+    '''
 
-  '''
-    @brief Turn on the underline showCursor 
-  '''
-  def cursor(self):
+  def scroll_display_right(self)
+    '''
+      @brief 向右滚动显示
+    '''
 
-  '''
-    @brief This is for text that flows Left to Right
-  '''
-  def left_to_right(self):
+  def print_out(self,arg)
+    '''
+      @brief 向液晶屏输出显示
+      @param arg 输出的数据
+    '''
 
-  '''
-    @brief This is for text that flows Right to Left
-  '''
-  def right_to_left(self):
+  def home(self)
+    '''
+      @brief 将光标回到初始位置（0,0）
+    '''
 
-  '''
-    @brief This will 'left justify' text from the showCursor
-  '''
-  def no_autoscroll(self):
+  def no_display(self)
+    '''
+      @brief 关闭显示
+    '''
 
-  '''
-    @brief This will 'right justify' text from the showCursor
-  '''
-  def autoscroll(self):
+  def display(self)
+    '''
+      @brief 打开显示
+    '''
 
-  '''
-    @brief Allows us to fill the first 8 C
-    @param location 代替字符 范围（0-7）
-    @param charmap  字符列表 大小8个字节
-  '''
-  def customSymbol(self,location, charmap):
+  def stop_blink(self)
+    '''
+      @brief 关闭闪烁光标
+    '''
 
-  '''
-    @brief 设置背光
-    @param mode  true代表开启背光并设置为白色，false代表关闭背光
-  '''
-  def setBacklight(self,mode):
+  def blink(self)
+    '''
+      @brief 打开闪烁光标
+    '''
 
-  '''
-     @brief 设置背光PWM输出
-     @param color  背光颜色  参数选择：REG_RED\REG_GREEN\REG_BLUE
-     @param pwm  颜色强度值   范围(0-255)
-  '''
-  def set_pwm(self,color,pwm):
+  def no_cursor(self)
+    '''
+      @brief 关闭下划线光标
+    '''
 
-  '''
-     @brief 设置背光为白色
-  '''
-  def set_color_white(self):
+  def cursor(self)
+    '''
+      @brief 打开下划线光标
+    '''
 
-  '''
-    @brief 关闭背光
-  '''
-  def close_backlight(self):
+  def left_to_right(self)
+    '''
+      @brief 此函数用于从左到右流动的文本
+    '''
+
+  def right_to_left(self)
+    '''
+      @brief 此函数用于从右到左流动的文本
+    '''
+
+  def no_autoscroll(self)
+    '''
+      @brief 这将使文本从显示光标处“左对齐”
+    '''
+
+  def autoscroll(self)
+    '''
+      @brief 这将使文本从显示光标处“右对齐”
+    '''
+
+  def custom_symbol(self,location, charmap)
+    '''
+      @brief 允许我们将前8个CGRAM位置填充自定义字符
+      @param location 代替字符 范围（0-7）
+      @param charmap  字符列表 大小8个字节
+    '''
+
+  def set_backlight(self,mode)
+    '''
+      @brief 设置背光
+      @param mode  true代表开启背光并设置为白色，false代表关闭背光
+    '''
+
+  def set_pwm(self,color,pwm)
+    '''
+       @brief 设置背光PWM输出
+       @param color  背光颜色  参数选择：REG_RED\REG_GREEN\REG_BLUE
+       @param pwm  颜色强度值   范围(0-255)
+    '''
+
+  def set_color_white(self)
+    '''
+       @brief 设置背光为白色
+    '''
+
+  def close_backlight(self)
+    '''
+      @brief 关闭背光
+    '''
 ```
 
 ## 兼容性

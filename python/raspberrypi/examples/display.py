@@ -22,6 +22,8 @@ import time
 # -----------------------------------------
 #   LCD1602 RGB Module  |  V1.0  | 0x60   |
 # -----------------------------------------
+#   LCD1602 RGB Module  |  V1.1  | 0x2D   |
+# -----------------------------------------
 lcd=DFRobot_RGBLCD1602(rgb_addr=0x60,col= 16,row = 2)                               #create LCD object,specify col and row
 '''
   @brief output data to LCD to display
