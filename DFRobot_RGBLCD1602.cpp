@@ -289,7 +289,7 @@ void DFRobot_RGBLCD1602::send(uint8_t *data, uint8_t len)
     _pWire->beginTransmission(_lcdAddr);        // transmit to device #4
     for(int i=0; i<len; i++) {
         _pWire->write(data[i]);
-		delay(5);
+		delayMicroseconds(100);
     }
     _pWire->endTransmission();                     // stop transmitting
 }
